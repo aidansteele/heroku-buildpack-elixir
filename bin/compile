@@ -45,26 +45,26 @@ done
 
 echo "-----> Using Erlang/OTP $erl_ver"
 
-(
-  set -e
-
-  # Already cached?
-  test -f ${cache}/${erl_tarball} && exit
-
-  rm -rf ${cache}/* # be sure not to build up cruft
-  cd ${cache}
-  echo "-------> Fetching Erlang/OTP $erl_ver"
-  curl -sO ${OTP_TARBALL_URL} || exit 1
-)
-
-echo "-------> Unpacking Erlang/OTP $erl_ver"
-mkdir -p ${ERLROOT}
-tar zxf ${cache}/${erl_tarball} -C ${ERLROOT} --strip-components=2
-echo "-------> Installing Erlang/OTP $erl_ver"
-ln -s ${ERLROOT} /app/otp
-${ERLROOT}/Install -minimal /app/otp
-
-PATH=/app/otp/bin:$PATH
+# (
+#   set -e
+# 
+#   # Already cached?
+#   test -f ${cache}/${erl_tarball} && exit
+# 
+#   rm -rf ${cache}/* # be sure not to build up cruft
+#   cd ${cache}
+#   echo "-------> Fetching Erlang/OTP $erl_ver"
+#   curl -sO ${OTP_TARBALL_URL} || exit 1
+# )
+# 
+# echo "-------> Unpacking Erlang/OTP $erl_ver"
+# mkdir -p ${ERLROOT}
+# tar zxf ${cache}/${erl_tarball} -C ${ERLROOT} --strip-components=2
+# echo "-------> Installing Erlang/OTP $erl_ver"
+# ln -s ${ERLROOT} /app/otp
+# ${ERLROOT}/Install -minimal /app/otp
+# 
+# PATH=/app/otp/bin:$PATH
 
 if [ ! -e "rebar" ]; then
   echo "-----> Installing Rebar from buildpack"
