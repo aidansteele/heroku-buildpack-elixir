@@ -33,7 +33,6 @@ fi
 ex_ver=${ELIXIR_VERSION:=${DEFAULT_ELIXIR_VERSION}}
 ex_tarball=${ex_ver}.tar
 ELIXIR_TARBALL_URL="https://github.com/elixir-lang/elixir/tarball/${ex_ver}"
-EXROOT=${build}/ex
 
 mkdir ${APP_PATH}
 for file in ${build}/* ${build}/.*; do
@@ -73,35 +72,8 @@ if [ ! -e "rebar" ]; then
   PATH=${bpdir}/opt:$PATH
 fi
 
-echo "-----> Using Elixir $ex_ver"
-
-(
-  set -e
-
-  # Already cached?
-  test -f ${cache}/${ex_tarball} && exit
-
-  rm -rf ${cache}/* # be sure not to build up cruft
-  cd ${cache}
-  echo "-------> Fetching Elixir $ex_ver"
-  curl -LsO ${ELIXIR_TARBALL_URL} -o $ex_tarball || exit 1
-  mv $ex_ver $ex_tarball
-)
-
-echo "-------> Unpacking Elixir $ex_ver"
-mkdir -p ${EXROOT}
-tar xf ${cache}/${ex_tarball} -C ${EXROOT} --strip-components=1
-echo "-------> Installing Elixir $ex_ver"
-
-(
-  set -e
-
-  cd ${EXROOT}
-  make > /dev/null
-)
-
-ln -s ${EXROOT} /app/ex
-
+echo "-----> Using Elixir installed at /opt"
+ln -s /opt/elixir /app/ex
 PATH=/app/ex/bin:$PATH
 
 cd ${APP_PATH}
