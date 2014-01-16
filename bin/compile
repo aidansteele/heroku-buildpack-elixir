@@ -60,6 +60,9 @@ PATH=/app/otp/bin:$PATH
 PATH=/app:$PATH
 PATH=/app/ex/bin:$PATH
 
+MOO=`which mix`
+echo "----> mix is $MOO"
+
 cd ${APP_PATH}
 
 echo "-----> PATH is $PATH"
