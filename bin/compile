@@ -64,6 +64,9 @@ cd ${APP_PATH}
 
 echo "-----> PATH is $PATH"
 
+CON=$(ls -R)
+echo "-----> $CON"
+
 echo "-----> Building with Mix"
 unset GIT_DIR
 
