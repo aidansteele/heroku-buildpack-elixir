@@ -55,7 +55,7 @@ echo "-----> Downloaded prebundled Elixir"
 )
 
 echo "-----> Unpacking prebundled Elixir"
-tar -zxf ${cache}/app.tar.gz -C ${build}
+tar -zxf ${cache}/app.tar.gz -C /app
 PATH=/app/otp/bin:$PATH
 PATH=/app:$PATH
 PATH=/app/ex/bin:$PATH
