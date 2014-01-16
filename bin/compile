@@ -43,37 +43,21 @@ for file in ${build}/* ${build}/.*; do
     mv "$file" "$APP_PATH/";
 done
 
-echo "-----> Using Erlang/OTP $erl_ver"
+PREBUNDLED_URL="https://s3-ap-southeast-2.amazonaws.com/syd-ex-builtpack/app.tar.gz"
 
-# (
-#   set -e
-# 
-#   # Already cached?
-#   test -f ${cache}/${erl_tarball} && exit
-# 
-#   rm -rf ${cache}/* # be sure not to build up cruft
-#   cd ${cache}
-#   echo "-------> Fetching Erlang/OTP $erl_ver"
-#   curl -sO ${OTP_TARBALL_URL} || exit 1
-# )
-# 
-# echo "-------> Unpacking Erlang/OTP $erl_ver"
-# mkdir -p ${ERLROOT}
-# tar zxf ${cache}/${erl_tarball} -C ${ERLROOT} --strip-components=2
-# echo "-------> Installing Erlang/OTP $erl_ver"
-# ln -s ${ERLROOT} /app/otp
-# ${ERLROOT}/Install -minimal /app/otp
-# 
-# PATH=/app/otp/bin:$PATH
+echo "-----> Downloaded prebundled Elixir"
 
-if [ ! -e "rebar" ]; then
-  echo "-----> Installing Rebar from buildpack"
-  cp ${bpdir}/opt/rebar $build
-  PATH=${bpdir}/opt:$PATH
-fi
+(
+  set -e
+  test -f ${cache}/app.tar.gz && exit
+	cd ${cache}
+	curl -sO ${PREBUNDLED_URL} || exit 1
+)
 
-echo "-----> Using Elixir installed at /opt"
-ln -s /opt/elixir /app/ex
+echo "-----> Unpacking prebundled Elixir"
+tar -zxf ${cache}/app.tar.gz -C ${build}
+PATH=/app/otp/bin:$PATH
+PATH=/app:$PATH
 PATH=/app/ex/bin:$PATH
 
 cd ${APP_PATH}
