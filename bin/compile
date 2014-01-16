@@ -62,6 +62,8 @@ PATH=/app/ex/bin:$PATH
 
 cd ${APP_PATH}
 
+echo "-----> PATH is $PATH"
+
 echo "-----> Building with Mix"
 unset GIT_DIR
 
